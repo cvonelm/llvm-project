@@ -594,6 +594,30 @@ struct TargetRISCV64 : public GenericTarget<TargetRISCV64> {
 };
 } // namespace
 
+
+namespace {
+
+struct TargetVE : public GenericTarget<TargetVE> {
+ using GenericTarget::GenericTarget;
+
+ static constexpr int defaultWidth = 64;
+  
+ CodeGenSpecifics::Marshalling
+  complexArgumentType(mlir::Location loc, mlir::Type eleTy) const override {
+    CodeGenSpecifics::Marshalling marshal;
+    TODO(loc, "handle complex argument types");
+    return marshal;
+  }
+
+  CodeGenSpecifics::Marshalling
+  complexReturnType(mlir::Location loc, mlir::Type eleTy) const override {
+    CodeGenSpecifics::Marshalling marshal;
+    TODO(loc, "handle complex return types");
+    return marshal;
+  }
+
+};
+}
 //===----------------------------------------------------------------------===//
 // AMDGPU linux target specifics.
 //===----------------------------------------------------------------------===//
@@ -710,6 +734,9 @@ fir::CodeGenSpecifics::get(mlir::MLIRContext *ctx, llvm::Triple &&trp,
                                           std::move(kindMap));
   case llvm::Triple::ArchType::loongarch64:
     return std::make_unique<TargetLoongArch64>(ctx, std::move(trp),
+                                               std::move(kindMap));
+  case llvm::Triple::ArchType::ve:
+    return std::make_unique<TargetVE>(ctx, std::move(trp),
                                                std::move(kindMap));
   }
   TODO(mlir::UnknownLoc::get(ctx), "target not implemented");

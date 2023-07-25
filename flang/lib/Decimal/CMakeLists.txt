@@ -48,6 +48,7 @@ endif()
 # Disable libstdc++ assertions, even in an LLVM_ENABLE_ASSERTIONS build, to
 # avoid an unwanted dependency on libstdc++.so.
 add_definitions(-U_GLIBCXX_ASSERTIONS)
+add_definitions(-U_LIBCPP_ENABLE_ASSERTIONS)
 
 add_flang_library(FortranDecimal INSTALL_WITH_TOOLCHAIN
   binary-to-decimal.cpp

@@ -81,6 +81,7 @@ append(${NO_LTO_FLAGS} CMAKE_CXX_FLAGS)
 # to avoid an unwanted dependency on libstdc++/libc++.so.
 add_definitions(-U_GLIBCXX_ASSERTIONS)
 add_definitions(-U_LIBCPP_ENABLE_ASSERTIONS)
+add_definitions("\"-D_LIBCPP_VERBOSE_ABORT(...)=abort();\"")
 
 add_subdirectory(FortranMain)
 

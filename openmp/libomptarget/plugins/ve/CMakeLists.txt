@@ -53,10 +53,11 @@ if(${LIBOMPTARGET_DEP_VEO_FOUND})
 
   target_link_libraries(
     "omptarget.rtl.${tmachine_libname}"
+    PRIVATE
     elf_common
     ${LIBOMPTARGET_DEP_LIBFFI_LIBRARIES}
     ${additional_libs}
-    "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/../exports -Wl,-z,defs")
+    "-z defs")
 
   # Report to the parent scope that we are building a plugin.
   set(LIBOMPTARGET_SYSTEM_TARGETS

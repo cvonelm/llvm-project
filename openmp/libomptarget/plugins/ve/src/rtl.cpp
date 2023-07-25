@@ -428,17 +428,17 @@ int32_t __tgt_rtl_launch_kernel(int32_t DeviceId, void *TgtEntryPtr,
   }
 
   for (int i = 0; i < KernelArgs->NumArgs; ++i) {
-    ret = veo_args_set_u64(TargetArgs, i, (intptr_t)Args[i]);
+    ret = veo_args_set_u64(TargetArgs, i, (intptr_t)TgtArgs[i]);
 
     if (ret != 0) {
       DP("veo_args_set_u64() has returned %d for argnum=%d and value %p\n", ret,
-         i, Args[i]);
+         i, KernelArgs[i]);
       return OFFLOAD_FAIL;
     }
   }
 
   uint64_t RetVal;
-  if (target_run_function_wait(ID, reinterpret_cast<uint64_t>(Entry),
+  if (target_run_function_wait(DeviceId, reinterpret_cast<uint64_t>(TgtEntryPtr),
                                TargetArgs, &RetVal) != OFFLOAD_SUCCESS) {
     veo_args_free(TargetArgs);
     return OFFLOAD_FAIL;
